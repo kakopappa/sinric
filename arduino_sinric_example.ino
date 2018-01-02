@@ -22,7 +22,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
       Serial.printf("[WSc] get text: %s\n", payload);
 
       // Payload example:
-      //{"deviceId":"5a2b908a74a6703928abf38b","powerState":"ON"}
+      //{"deviceId":"5a2b908a74a6703928abf38b","action":"setPowerState", "value" : "ON"}
       
       // send message to server
       // webSocket.sendTXT("message here");
