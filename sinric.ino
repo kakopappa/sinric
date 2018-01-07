@@ -4,9 +4,18 @@
 #include <ESP8266WiFiMulti.h>
 #include <WebSocketsClient.h>
 #include <Hash.h>
+#include <ArduinoJson.h> // get it from https://arduinojson.org/
 
 ESP8266WiFiMulti WiFiMulti;
 WebSocketsClient webSocket;
+
+void turnOn() {
+  Serial.println("Turn on ...");
+}
+
+void turnOff() {
+  Serial.println("Turn off ...");
+}
 
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 
@@ -18,14 +27,27 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
         Serial.printf("[WSc] Connected to url: %s\n", payload);
       }
       break;
-    case WStype_TEXT:
-      Serial.printf("[WSc] get text: %s\n", payload);
+    case WStype_TEXT: {
+        Serial.printf("[WSc] get text: %s\n", payload);
+  
+        // Payload for ON :
+        //{"deviceId":"5a2b908a74a6703928abf38b","powerState":"ON"}
+        DynamicJsonBuffer jsonBuffer;
+        JsonObject& json = jsonBuffer.parseObject((char*)payload);
+  
+        String deviceId = json ["deviceId"];
+        String action = json ["action"];
 
-      // Payload example:
-      //{"deviceId":"5a2b908a74a6703928abf38b","powerState":"ON"}
-      
-      // send message to server
-      // webSocket.sendTXT("message here");
+        if(action == "setPowerState") {
+            String value = json ["value"];
+
+            if(value == "ON") {
+                turnOn();
+            } else {
+                turnOff();
+            }
+        }
+      }
       break;
     case WStype_BIN:
       Serial.printf("[WSc] get binary length: %u\n", length);
@@ -38,7 +60,7 @@ void setup() {
   Serial.begin(115200);
   
   // TODO: Change your WiFI settings
-  WiFiMulti.addAP("wifiname", "wifipassword");
+  WiFiMulti.addAP("<your wifi ssid>", "<your wifi password>");
 
   //WiFi.disconnect();
   while(WiFiMulti.run() != WL_CONNECTED) {
@@ -52,7 +74,7 @@ void setup() {
   webSocket.onEvent(webSocketEvent);
 
   // TODO: Change your API Key. Your API Key is displayed on sinric.com dashboard
-  webSocket.setAuthorization("apikey", "<Paste your API KEY here>");
+  webSocket.setAuthorization("apikey", "<Place your API key here>");
   
  
 }
