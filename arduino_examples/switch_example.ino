@@ -2,7 +2,7 @@
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
-#include <WebSocketsClient.h>
+#include <WebSocketsClient.h> // get it from https://github.com/Links2004/arduinoWebSockets
 #include <Hash.h>
 #include <ArduinoJson.h> // get it from https://arduinojson.org/
 
