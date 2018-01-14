@@ -35,7 +35,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
         DynamicJsonBuffer jsonBuffer;
         JsonObject& json = jsonBuffer.parseObject((char*)payload);
   
-        String deviceId = json ["deviceId"]; // NOTE: You can identify multiple switches by deviceId
+        String deviceId = json ["deviceId"]; // NOTE: You can identify multiple switches by deviceId. Every Smart Home Device you create in sinric.com has a unique device id
         String action = json ["action"]; 
 
         if(action == "setPowerState") {
