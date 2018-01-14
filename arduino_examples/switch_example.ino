@@ -35,8 +35,8 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
         DynamicJsonBuffer jsonBuffer;
         JsonObject& json = jsonBuffer.parseObject((char*)payload);
   
-        String deviceId = json ["deviceId"];
-        String action = json ["action"];
+        String deviceId = json ["deviceId"]; // NOTE: You can identify multiple switches by deviceId
+        String action = json ["action"]; 
 
         if(action == "setPowerState") {
             String value = json ["value"];
