@@ -14,7 +14,8 @@ WebSocketsClient webSocket;
 #define MyApiKey "xxxxxxxxxxxxxxxx" // TODO: Change to your sinric API Key. Your API Key is displayed on sinric.com dashboard
 #define MySSID "xxxxxxxxxxxxxxxx" // TODO: Change to your Wifi network SSID
 #define MyWifiPassword "xxxxxxxxxxxxxxxx" // TODO: Change to your Wifi network password
-#define HEARTBEAT_INTERVAL 35000
+
+#define HEARTBEAT_INTERVAL 300000 // 5 Minutes 
 
 uint64_t heartbeatTimestamp = 0;
 bool isConnected = false;
