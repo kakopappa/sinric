@@ -13,8 +13,10 @@ How to use
 3. Copy your API Key
 
 4. Connect. Example Switch
+https://github.com/kakopappa/sinric/blob/master/arduino_examples
 
 5. Install Amazon Alexa smart home skill (Available in US, German, India, UK, Canada) here
+https://www.amazon.com/dp/B078RGYWQQ
 
 6. Buy Me a Beer!
 
