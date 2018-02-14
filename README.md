@@ -18,7 +18,7 @@ How to use
 
 6. Buy Me a Beer!
 
-Paypal: paypal.me/arunat
+Paypal: https://paypal.me/arunat
 
 Ethereum: 
 0x025463f64589ee6ff2d1584ea2ee8133b3af49fe
