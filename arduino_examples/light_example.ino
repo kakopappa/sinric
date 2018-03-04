@@ -94,6 +94,17 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
                 turnOff(deviceId);
             }
         }
+        else if(action == "SetColor") {
+            // Alexa, set the device name to red
+            // get text: {"deviceId":"xxxx","action":"SetColor","value":{"hue":0,"saturation":1,"brightness":1}}
+            String hue = json ["value"]["hue"];
+            String saturation = json ["value"]["saturation"];
+            String brightness = json ["value"]["brightness"];
+
+            Serial.println("[WSc] hue: " + hue);
+            Serial.println("[WSc] saturation: " + saturation);
+            Serial.println("[WSc] brightness: " + brightness);
+        }
         else if(action == "setBrightness") {
           
         }
