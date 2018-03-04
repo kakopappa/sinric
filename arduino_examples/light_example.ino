@@ -124,8 +124,9 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 
 void setup() {
   Serial.begin(115200);
-  
-  WiFiMulti.addAP(MySSID, MyWifiPassword);
+   if (WiFi.status() != WL_CONNECTED) { // FIX FOR WIFI RECONNECT (only .begin if not connected)
+    WiFiMulti.addAP(MySSID, MyWifiPassword);
+  }
   Serial.println();
   Serial.print("Connecting to Wifi: ");
   Serial.println(MySSID);  
