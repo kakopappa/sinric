@@ -1,5 +1,5 @@
 /*
- Version 0.2 - Feb 03 2018
+ Version 0.3 - March 06 2018
 */ 
 
 #include <Arduino.h>
@@ -7,18 +7,23 @@
 #include <ESP8266WiFiMulti.h>
 #include <WebSocketsClient.h> //  get it from https://github.com/Links2004/arduinoWebSockets/releases 
 #include <ArduinoJson.h> // get it from https://arduinojson.org/ or install via Arduino library manager
+#include <StreamString.h>
 
 ESP8266WiFiMulti WiFiMulti;
 WebSocketsClient webSocket;
+WiFiClient client;
 
-#define MyApiKey "xxxxxxxxxxxxxxxx" // TODO: Change to your sinric API Key. Your API Key is displayed on sinric.com dashboard
-#define MySSID "xxxxxxxxxxxxxxxx" // TODO: Change to your Wifi network SSID
-#define MyWifiPassword "xxxxxxxxxxxxxxxx" // TODO: Change to your Wifi network password
+#define MyApiKey "" // TODO: Change to your sinric API Key. Your API Key is displayed on sinric.com dashboard
+#define MySSID "" // TODO: Change to your Wifi network SSID
+#define MyWifiPassword "" // TODO: Change to your Wifi network password
 
 #define HEARTBEAT_INTERVAL 300000 // 5 Minutes 
 
 uint64_t heartbeatTimestamp = 0;
 bool isConnected = false;
+
+void setPowerStateOnServer(String deviceId, String value);
+void setTargetTemperatureOnServer(String deviceId, String value, String scale);
 
 void turnOn(String deviceId) {
   if (deviceId == "5axxxxxxxxxxxxxxxxxxx") // Device ID of first device
@@ -74,13 +79,8 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
         // {"deviceId": xxxx, "action": "setPowerState", value: "ON"} // https://developer.amazon.com/docs/device-apis/alexa-powercontroller.html
 
         // For Light device type
-        // {"deviceId": xxxx, "action": "AdjustBrightness", value: 3} // https://developer.amazon.com/docs/device-apis/alexa-brightnesscontroller.html
-        // {"deviceId": xxxx, "action": "setBrightness", value: 42} // https://developer.amazon.com/docs/device-apis/alexa-brightnesscontroller.html
-        // {"deviceId": xxxx, "action": "SetColor", value: {"hue": 350.5,  "saturation": 0.7138, "brightness": 0.6501}} // https://developer.amazon.com/docs/device-apis/alexa-colorcontroller.html
-        // {"deviceId": xxxx, "action": "DecreaseColorTemperature", value: 0} // https://developer.amazon.com/docs/device-apis/alexa-colortemperaturecontroller.html
-        // {"deviceId": xxxx, "action": "IncreaseColorTemperature", value: 0} // https://developer.amazon.com/docs/device-apis/alexa-colortemperaturecontroller.html
-        // {"deviceId": xxxx, "action": "SetColorTemperature", value: 2200} // https://developer.amazon.com/docs/device-apis/alexa-colortemperaturecontroller.html
-        
+        // Look at the light example in github
+          
         DynamicJsonBuffer jsonBuffer;
         JsonObject& json = jsonBuffer.parseObject((char*)payload); 
         String deviceId = json ["deviceId"];     
@@ -94,11 +94,10 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
                 turnOff(deviceId);
             }
         }
-        else if(action == "setBrightness") {
-            
-        }
-        else if(action == "AdjustBrightness") {
-          
+        else if (action == "SetTargetTemperature") {
+            String deviceId = json ["deviceId"];     
+            String action = json ["action"];
+            String value = json ["value"];
         }
         else if (action == "test") {
             Serial.println("[WSc] received test command from sinric.com");
@@ -154,4 +153,37 @@ void loop() {
           webSocket.sendTXT("H");          
       }
   }   
+}
+
+// If you are going to use a push button to on/off the switch manually, use this function to update the status on the server
+// so it will reflect on Alexa app.
+// eg: setPowerStateOnServer("deviceid", "ON")
+void setPowerStateOnServer(String deviceId, String value) {
+  DynamicJsonBuffer jsonBuffer;
+  JsonObject& root = jsonBuffer.createObject();
+  root["deviceId"] = deviceId;
+  root["action"] = "setPowerState";
+  root["value"] = value;
+  StreamString databuf;
+  root.printTo(databuf);
+  
+  webSocket.sendTXT(databuf);
+}
+
+//eg: setPowerStateOnServer("deviceid", "CELSIUS", "25.0")
+void setTargetTemperatureOnServer(String deviceId, String value, String scale) {
+  DynamicJsonBuffer jsonBuffer;
+  JsonObject& root = jsonBuffer.createObject();
+  root["action"] = "SetTargetTemperature";
+  root["deviceId"] = deviceId;
+  
+  JsonObject& valueObj = root.createNestedObject("value");
+  JsonObject& targetSetpoint = valueObj.createNestedObject("targetSetpoint");
+  targetSetpoint["value"] = value;
+  targetSetpoint["scale"] = scale;
+   
+  StreamString databuf;
+  root.printTo(databuf);
+  
+  webSocket.sendTXT(databuf);
 }

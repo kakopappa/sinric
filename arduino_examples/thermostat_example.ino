@@ -1,5 +1,5 @@
 /*
- Version 0.2 - Feb 15 2018
+ Version 0.3 - March 06 2018
 */ 
 
 #include <Arduino.h>
@@ -7,6 +7,7 @@
 #include <ESP8266WiFiMulti.h>
 #include <WebSocketsClient.h> //  get it from https://github.com/Links2004/arduinoWebSockets/releases 
 #include <ArduinoJson.h> // get it from https://arduinojson.org/ or install via Arduino library manager
+#include <StreamString.h>
 
 ESP8266WiFiMulti WiFiMulti;
 WebSocketsClient webSocket;
@@ -19,7 +20,9 @@ WebSocketsClient webSocket;
 
 uint64_t heartbeatTimestamp = 0;
 bool isConnected = false;
- 
+
+void setPowerStateOnServer(String deviceId, String value);
+void setTargetTemperatureOnServer(String deviceId, String value, String scale);
 
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
   switch(type) {
@@ -142,4 +145,37 @@ void loop() {
           webSocket.sendTXT("H");          
       }
   }   
+}
+
+// If you are going to use a push button to on/off the switch manually, use this function to update the status on the server
+// so it will reflect on Alexa app.
+// eg: setPowerStateOnServer("deviceid", "ON")
+void setPowerStateOnServer(String deviceId, String value) {
+  DynamicJsonBuffer jsonBuffer;
+  JsonObject& root = jsonBuffer.createObject();
+  root["deviceId"] = deviceId;
+  root["action"] = "setPowerState";
+  root["value"] = value;
+  StreamString databuf;
+  root.printTo(databuf);
+  
+  webSocket.sendTXT(databuf);
+}
+
+//eg: setPowerStateOnServer("deviceid", "CELSIUS", "25.0")
+void setTargetTemperatureOnServer(String deviceId, String value, String scale) {
+  DynamicJsonBuffer jsonBuffer;
+  JsonObject& root = jsonBuffer.createObject();
+  root["action"] = "SetTargetTemperature";
+  root["deviceId"] = deviceId;
+  
+  JsonObject& valueObj = root.createNestedObject("value");
+  JsonObject& targetSetpoint = valueObj.createNestedObject("targetSetpoint");
+  targetSetpoint["value"] = value;
+  targetSetpoint["scale"] = scale;
+   
+  StreamString databuf;
+  root.printTo(databuf);
+  
+  webSocket.sendTXT(databuf);
 }
