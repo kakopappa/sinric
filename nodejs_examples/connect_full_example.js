@@ -1,3 +1,5 @@
+// By Manos Nikiforakis
+
 const WebSocket = require('ws')
 const token = 'Your api key here'
 const thermostatId = '5xxxxxxxxxxxxxxxxxxxxxx'
