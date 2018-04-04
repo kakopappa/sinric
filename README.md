@@ -1,4 +1,4 @@
-# sinric
+# Sinric
 
 Welcome to Sinric
 
@@ -6,19 +6,23 @@ Sinric helps you to integrate your existing devices (such as RaspberryPi, ESP822
 
 How to use
 
-1. Register for an account if you do not have one (Use Chrome, FireFox)
+1. Register for an account (https://sinric.com) if you do not have one (Use Chrome, FireFox)
 
-2. Login and create a smart home device
+2. Login and create a smart home device (Dashboard -> Add smart home device)
 
-3. Copy your API Key
+3. Copy your API Key from dashboard
 
-4. Connect. Example Switch
+4. Connect to Sinric IOT server. For an example use switch
 https://github.com/kakopappa/sinric/blob/master/arduino_examples
 
-5. Install Amazon Alexa smart home skill (Available in US, German, India, UK, Canada) here
+5. Change the Arduino Sketch. Replace the API Key, Wifi SSID and Password
+
+6. Install Amazon Alexa Smart Home Skill (Available in US, German, India, UK, Canada) here and Link to your Sinric account.
 https://www.amazon.com/dp/B078RGYWQQ
 
-6. Buy Me a Beer!
+7. Discover for new devices. 
+
+8. Buy Me a Beer!
 
 Paypal: https://paypal.me/arunat
 
