@@ -25,6 +25,8 @@ bool isConnected = false;
 void setPowerStateOnServer(String deviceId, String value);
 void setTargetTemperatureOnServer(String deviceId, String value, String scale);
 
+// deviceId is the ID assgined to your smart-home-device in sinric.com dashboard. Copy it from dashboard and paste it here
+
 void turnOn(String deviceId) {
   if (deviceId == "5axxxxxxxxxxxxxxxxxxx") // Device ID of first device
   {  
