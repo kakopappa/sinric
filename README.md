@@ -36,3 +36,9 @@ Litecoin:
 LUCY9BBoX6uFXh8mHMmK3qdXQPwMVVVCfx
 
 Or support me by buying a IRDevKit to turn on or off your TV or air conditioner via Amazon Alexa
+https://irdevkit.com
+
+Supporting Libraries:
+
+Boris Jäger has created an "easy to use" class for connecting your esp-module to io.sinric.com
+https://github.com/sivar2311/SinricClass
