@@ -4,7 +4,7 @@ Welcome to Sinric
 
 Sinric helps you to integrate your existing devices (such as RaspberryPi, ESP8226, ESP32 or Arduino) with Amazon Alexa for FREE!
 
-How to use
+How to use : Alexa
 
 1. Register for an account (https://sinric.com) if you do not have one (Use Chrome, FireFox)
 
@@ -21,6 +21,9 @@ https://github.com/kakopappa/sinric/blob/master/arduino_examples
 https://www.amazon.com/dp/B078RGYWQQ
 
 7. Discover for new devices. 
+
+How to use : Google Home
+https://github.com/kakopappa/sinric/wiki/How-to-use-Google-Home
 
 8. Buy Me a Beer!
 
