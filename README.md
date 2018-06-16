@@ -23,6 +23,7 @@ https://www.amazon.com/dp/B078RGYWQQ
 7. Discover for new devices. 
 
 **How to use : Google Home**
+
 https://github.com/kakopappa/sinric/wiki/How-to-use-Google-Home
 
 8. Buy Me a Beer!
