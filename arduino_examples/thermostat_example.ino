@@ -5,8 +5,8 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
-#include <WebSocketsClient.h> //  get it from https://github.com/Links2004/arduinoWebSockets/releases 
-#include <ArduinoJson.h> // get it from https://arduinojson.org/ or install via Arduino library manager
+#include <WebSocketsClient.h> //  https://github.com/kakopappa/sinric/wiki/How-to-add-dependency-libraries
+#include <ArduinoJson.h> // https://github.com/kakopappa/sinric/wiki/How-to-add-dependency-libraries
 #include <StreamString.h>
 
 ESP8266WiFiMulti WiFiMulti;
