@@ -162,7 +162,7 @@ void setPowerStateOnServer(String deviceId, String value) {
   webSocket.sendTXT(databuf);
 }
 
-//eg: setPowerStateOnServer("deviceid", "CELSIUS", "25.0")
+//eg: setPowerStateOnServer("deviceid", "25.0", "CELSIUS")
 void setTargetTemperatureOnServer(String deviceId, String value, String scale) {
   DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
