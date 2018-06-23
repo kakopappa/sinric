@@ -30,6 +30,9 @@ https://github.com/kakopappa/sinric/wiki/How-to-use-Google-Home
 
 Paypal: https://paypal.me/arunat
 
+Or support me by buying a IRDevKit to turn on or off your TV or air conditioner via Amazon Alexa
+https://irdevkit.com
+
 Ethereum: 
 0x025463f64589ee6ff2d1584ea2ee8133b3af49fe
 
@@ -38,9 +41,6 @@ Bitcoin:
 
 Litecoin: 
 LUCY9BBoX6uFXh8mHMmK3qdXQPwMVVVCfx
-
-Or support me by buying a IRDevKit to turn on or off your TV or air conditioner via Amazon Alexa
-https://irdevkit.com
 
 Supporting Libraries:
 
