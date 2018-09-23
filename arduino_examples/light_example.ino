@@ -105,7 +105,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
             Serial.println("[WSc] saturation: " + saturation);
             Serial.println("[WSc] brightness: " + brightness);
         }
-        else if(action == "setBrightness") {
+        else if(action == "SetBrightness") {
           
         }
         else if(action == "AdjustBrightness") {
