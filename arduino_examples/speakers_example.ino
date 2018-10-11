@@ -68,20 +68,7 @@ void loop() {
           webSocket.sendTXT("H");          
       }
   }   
-}
-
-// deviceId is the ID assgined to your smart-home-device in sinric.com dashboard. Copy it from dashboard and paste it here
- 
-
-void adjustVolume(int adjustVolume) {
-   Serial.print("adjustVolume: ");
-   Serial.println(adjustVolume);    
-}
-
-void setMute(bool mute) {
-   Serial.print("mute: ");
-   Serial.println(mute);    
-}
+} 
 
 void turnOn(String deviceId) {
   if (deviceId == "5axxxxxxxxxxxxxxxxxxx") // Device ID of first device
