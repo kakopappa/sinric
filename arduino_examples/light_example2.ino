@@ -9,7 +9,7 @@
 #define SSID_NAME "" // TODO: Change to your Wifi network SSID
 #define WIFI_PASSWORD "" // TODO: Change to your Wifi network password
 #define SERVER_URL "iot.sinric.com"
-#define SERVER_PORT 3000 
+#define SERVER_PORT 80 
 
 #define HEARTBEAT_INTERVAL 300000 // 5 Minutes 
 
