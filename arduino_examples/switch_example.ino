@@ -160,6 +160,9 @@ void loop() {
 // If you are going to use a push button to on/off the switch manually, use this function to update the status on the server
 // so it will reflect on Alexa app.
 // eg: setPowerStateOnServer("deviceid", "ON")
+
+// Call ONLY If status changed. DO NOT CALL THIS IN loop() and overload the server. 
+
 void setPowerStateOnServer(String deviceId, String value) {
   DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
@@ -173,6 +176,9 @@ void setPowerStateOnServer(String deviceId, String value) {
 }
 
 //eg: setPowerStateOnServer("deviceid", "CELSIUS", "25.0")
+
+// Call ONLY If status changed. DO NOT CALL THIS IN loop() and overload the server. 
+
 void setTargetTemperatureOnServer(String deviceId, String value, String scale) {
   DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();

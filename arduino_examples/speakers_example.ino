@@ -153,6 +153,8 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 // If you are going to use a push button to on/off the switch manually, use this function to update the status on the server
 // so it will reflect on Alexa app.
 // eg: setPowerStateOnServer("deviceid", "ON")
+
+// Call ONLY If status changed. DO NOT CALL THIS IN loop() and overload the server. 
 void setPowerStateOnServer(String deviceId, String value) {
   DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
