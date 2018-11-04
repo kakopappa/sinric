@@ -7,7 +7,7 @@
 
 //...
 
-const int postingInterval = 60 * 1000; // post data every 30 seconds
+const int postingInterval = 3 * 60 * 1000; // post data every 3 mins
 unsigned long previousMillis = 0;
 
 void setup() {
