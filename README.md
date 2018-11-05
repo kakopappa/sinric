@@ -17,7 +17,7 @@ https://github.com/kakopappa/sinric/blob/master/arduino_examples
 
 5. Change the Arduino Sketch. Replace the API Key, Wifi SSID and Password
 
-6. Install Amazon Alexa Smart Home Skill (Available in US, German, India, UK, Canada, Australia, New Zealand) here and Link to your Sinric account.
+6. Install Amazon Alexa Smart Home Skill (Available in US, German, India, UK, Canada, Australia, New Zealand, Italy) here and Link to your Sinric account.
 https://www.amazon.com/dp/B078RGYWQQ
 
 7. Discover for new devices. 
