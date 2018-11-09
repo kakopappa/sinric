@@ -20,6 +20,8 @@ https://github.com/kakopappa/sinric/blob/master/arduino_examples
 6. Install Amazon Alexa Smart Home Skill (Available in US, German, India, UK, Canada, Australia, New Zealand, Italy) here and Link to your Sinric account.
 https://www.amazon.com/dp/B078RGYWQQ
 
+If you cannot link the Skill, check https://github.com/kakopappa/sinric/wiki/Cannot-link-skill%3F
+
 7. Discover for new devices. 
 
 **How to use : Google Home**
