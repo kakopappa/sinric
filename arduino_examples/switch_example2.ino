@@ -105,11 +105,6 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
                 turnOff(deviceId);
             }
         }
-        else if (action == "SetTargetTemperature") {
-            String deviceId = json ["deviceId"];     
-            String action = json ["action"];
-            String value = json ["value"];
-        }
         else if (action == "test") {
             Serial.println("[WSc] received test command from sinric.com");
         }
