@@ -15,8 +15,8 @@ WiFiClient client;
 
 #define HEARTBEAT_INTERVAL 300000 // 5 Minutes 
 
-const int relayPin1 = 1; 
-const int relayPin2 = 2;
+const int relayPin1 = 1; // TODO: Change according to your board
+const int relayPin2 = 2; // TODO: Change according to your board
 
 uint64_t heartbeatTimestamp = 0;
 bool isConnected = false;
