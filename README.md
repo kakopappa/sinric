@@ -44,7 +44,7 @@ Bitcoin:
 Litecoin: 
 LUCY9BBoX6uFXh8mHMmK3qdXQPwMVVVCfx
 
-Supporting Libraries:
+**Supporting Libraries:**
 
 Boris Jäger has created an "easy to use" library for connecting your devices to io.sinric.com
 https://github.com/sivar2311/SinricClass
