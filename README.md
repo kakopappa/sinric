@@ -46,5 +46,12 @@ LUCY9BBoX6uFXh8mHMmK3qdXQPwMVVVCfx
 
 Supporting Libraries:
 
-Boris Jäger has created an "easy to use" class for connecting your esp-module to io.sinric.com
+Boris Jäger has created an "easy to use" library for connecting your devices to io.sinric.com
 https://github.com/sivar2311/SinricClass
+
+Node-Red module by Mayank
+https://github.com/mayankraichura/node-red-contrib-sinric-ws
+
+Domoticz support by gizmocuz
+https://github.com/kakopappa/sinric/blob/master/arduino_examples/domoticz_example.ino
+
