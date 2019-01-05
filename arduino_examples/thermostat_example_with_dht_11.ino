@@ -22,8 +22,8 @@ DHTesp dht;
 #define MySSID "xx" // TODO: Change to your Wifi network SSID
 #define MyWifiPassword "xx" // TODO: Change to your Wifi network password
 
-#define HEARTBEAT_INTERVAL 500000 // 5 Minutes 
-#define TEMPRATURE_INTERVAL 30000 // 30 secs
+#define HEARTBEAT_INTERVAL  500000 // 5 Minutes 
+#define TEMPRATURE_INTERVAL 300000 // 3 Minutes 
 
 #define SERVER_URL "iot.sinric.com" //"iot.sinric.com"
 #define SERVER_PORT 80 // 80
@@ -184,7 +184,7 @@ void readTempature() {
   Serial.print("\t\t");
   Serial.println(dht.computeHeatIndex(dht.toFahrenheit(temperature), humidity, true), 1);
 
-  setSetTemperatureSettingOnServer("5c3053e37b378b174cd80bd4", temperature, "FAHRENHEIT", temperaturefh, humidity);  
+  setSetTemperatureSettingOnServer("<device id>", temperature, "FAHRENHEIT", temperaturefh, humidity);  
 }
 
 // If you are going to use a push button to on/off the switch manually, use this function to update the status on the server
