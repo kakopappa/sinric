@@ -1,5 +1,7 @@
+
+
 /*
- Version 0.3 - March 06 2018
+ Version 0.1 - Jan 05 2019
 */ 
 
 #include <Arduino.h>
@@ -8,22 +10,31 @@
 #include <WebSocketsClient.h> //  https://github.com/kakopappa/sinric/wiki/How-to-add-dependency-libraries
 #include <ArduinoJson.h> // https://github.com/kakopappa/sinric/wiki/How-to-add-dependency-libraries
 #include <StreamString.h>
+#include "DHTesp.h" // https://github.com/beegee-tokyo/DHTesp
+
+#define DEBUG_WEBSOCKETS true
 
 ESP8266WiFiMulti WiFiMulti;
 WebSocketsClient webSocket;
+DHTesp dht;
 
-#define MyApiKey "" // TODO: Change to your sinric API Key. Your API Key is displayed on sinric.com dashboard
-#define MySSID "" // TODO: Change to your Wifi network SSID
-#define MyWifiPassword "" // TODO: Change to your Wifi network password
+#define MyApiKey "xxxx" // TODO: Change to your sinric API Key. Your API Key is displayed on sinric.com dashboard
+#define MySSID "xx" // TODO: Change to your Wifi network SSID
+#define MyWifiPassword "xx" // TODO: Change to your Wifi network password
 
-#define HEARTBEAT_INTERVAL 300000 // 5 Minutes 
+#define HEARTBEAT_INTERVAL 500000 // 5 Minutes 
+#define TEMPRATURE_INTERVAL 30000 // 30 secs
+
+#define SERVER_URL "iot.sinric.com" //"iot.sinric.com"
+#define SERVER_PORT 80 // 80
 
 uint64_t heartbeatTimestamp = 0;
+uint64_t tempratureUpdateTimestamp = 0;
 bool isConnected = false;
 
 void setPowerStateOnServer(String deviceId, String value);
-void setSetTemperatureSettingOnServer(String deviceId, float setPoint, String scale, float ambientTemperature, float ambientHumidity);
-void setThermostatModeOnServer(String deviceId, String thermostatMode);
+void setSetTemperatureSettingOnServer(String deviceId, String value, String scale);
+void readTempature();
 
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
   switch(type) {
@@ -119,8 +130,10 @@ void setup() {
     Serial.println(WiFi.localIP());
   }
 
+  dht.setup(4, DHTesp::DHT11); // Connect DHT sensor to GPIO 4
+
   // server address, port and URL
-  webSocket.begin("iot.sinric.com", 80, "/");
+  webSocket.begin(SERVER_URL, SERVER_PORT, "/");
 
   // event handler
   webSocket.onEvent(webSocketEvent);
@@ -141,9 +154,38 @@ void loop() {
           heartbeatTimestamp = now;
           webSocket.sendTXT("H");          
       }
+
+      // Send the tempature settings to server
+      if((now - tempratureUpdateTimestamp) > TEMPRATURE_INTERVAL) {
+          tempratureUpdateTimestamp = now;
+          readTempature();
+      }
   }   
 }
 
+// Read tempratre from DHT Sensor
+
+void readTempature() { 
+  //delay(dht.getMinimumSamplingPeriod());
+
+  float humidity = dht.getHumidity();
+  float temperature = dht.getTemperature();
+  float temperaturefh = dht.toFahrenheit(temperature);
+  
+  Serial.print(dht.getStatusString());
+  Serial.print("\t");
+  Serial.print(humidity, 1);
+  Serial.print("\t\t");
+  Serial.print(temperature, 1);
+  Serial.print("\t\t");
+  Serial.print(dht.toFahrenheit(temperature), 1);
+  Serial.print("\t\t");
+  Serial.print(dht.computeHeatIndex(temperature, humidity, false), 1);
+  Serial.print("\t\t");
+  Serial.println(dht.computeHeatIndex(dht.toFahrenheit(temperature), humidity, true), 1);
+
+  setSetTemperatureSettingOnServer("5c3053e37b378b174cd80bd4", temperature, "FAHRENHEIT", temperaturefh, humidity);  
+}
 
 // If you are going to use a push button to on/off the switch manually, use this function to update the status on the server
 // so it will reflect on Alexa app.
