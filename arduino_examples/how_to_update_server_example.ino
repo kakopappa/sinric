@@ -6,6 +6,7 @@
 #include <StreamString.h>
 
 //...
+void setPowerStateOnServer(String deviceId, String value);
 
 const int postingInterval = 3 * 60 * 1000; // post data every 3 mins
 unsigned long previousMillis = 0;
@@ -41,19 +42,3 @@ void setPowerStateOnServer(String deviceId, String value) {
   webSocket.sendTXT(databuf);
 }
 
-void setTargetTemperatureOnServer(String deviceId, String value, String scale) {
-  DynamicJsonBuffer jsonBuffer;
-  JsonObject& root = jsonBuffer.createObject();
-  root["action"] = "SetTargetTemperature";
-  root["deviceId"] = deviceId;
-  
-  JsonObject& valueObj = root.createNestedObject("value");
-  JsonObject& targetSetpoint = valueObj.createNestedObject("targetSetpoint");
-  targetSetpoint["value"] = value;
-  targetSetpoint["scale"] = scale;
-   
-  StreamString databuf;
-  root.printTo(databuf);
-  
-  webSocket.sendTXT(databuf);
-}
