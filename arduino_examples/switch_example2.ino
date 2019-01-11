@@ -62,7 +62,7 @@ void turnOff(String deviceId) {
      Serial.print("Turn off Device ID: ");
      Serial.println(relayPin2);
      
-     digitalWrite(relayPin1, LOW);  // turn off relay with voltage LOW
+     digitalWrite(relayPin2, LOW);  // turn off relay with voltage LOW
    }
    else {
      Serial.print("Turn off for unknown device id: ");
