@@ -13,9 +13,9 @@ ESP8266WiFiMulti WiFiMulti;
 WebSocketsClient webSocket;
 WiFiClient client;
 
-#define MyApiKey "" // TODO: Change to your sinric API Key. Your API Key is displayed on sinric.com dashboard
-#define MySSID "" // TODO: Change to your Wifi network SSID
-#define MyWifiPassword "" // TODO: Change to your Wifi network password
+#define MyApiKey "3c404bcc-a434-445f-91ff-a29db5e652c9" // TODO: Change to your sinric API Key. Your API Key is displayed on sinric.com dashboard
+#define MySSID "CSS" // TODO: Change to your Wifi network SSID
+#define MyWifiPassword "ZSAWQ@-!!!!!!" // TODO: Change to your Wifi network password
 
 #define HEARTBEAT_INTERVAL 300000 // 5 Minutes 
 
@@ -28,12 +28,15 @@ void setTargetTemperatureOnServer(String deviceId, String value, String scale);
 // deviceId is the ID assgined to your smart-home-device in sinric.com dashboard. Copy it from dashboard and paste it here
 
 void turnOn(String deviceId) {
-  if (deviceId == "5axxxxxxxxxxxxxxxxxxx") // Device ID of first device
+  if (deviceId == "5c3cedbb89e6a11f3cc3591a") // Device ID of first device
+   digitalWrite (4, HIGH);
+   Delay (500);
+   digitalWrite (4, LOW);
   {  
     Serial.print("Turn on device id: ");
     Serial.println(deviceId);
   } 
-  else if (deviceId == "5axxxxxxxxxxxxxxxxxxx") // Device ID of second device
+  else if (deviceId == "5c3cedbb89e6a11f3cc3591a") // Device ID of second device
   { 
     Serial.print("Turn on device id: ");
     Serial.println(deviceId);
@@ -45,12 +48,15 @@ void turnOn(String deviceId) {
 }
 
 void turnOff(String deviceId) {
-   if (deviceId == "5axxxxxxxxxxxxxxxxxxx") // Device ID of first device
+   if (deviceId == "5c3cedbb89e6a11f3cc3591a") // Device ID of first device
+    DigitalWrite (4, HIGH);
+    Delay (500);
+    DigitalWrite (4, LOW);
    {  
      Serial.print("Turn off Device ID: ");
      Serial.println(deviceId);
    }
-   else if (deviceId == "5axxxxxxxxxxxxxxxxxxx") // Device ID of second device
+   else if (deviceId == "5c3cedbb89e6a11f3cc3591a") // Device ID of second device
    { 
      Serial.print("Turn off Device ID: ");
      Serial.println(deviceId);
