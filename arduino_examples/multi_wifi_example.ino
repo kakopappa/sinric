@@ -9,9 +9,9 @@
 #include <ArduinoJson.h> // get it from https://arduinojson.org/ or install via Arduino library manager
 #include "WiFiManager.h"          //https://github.com/tzapu/WiFiManager
 
-// Issue #18 https://github.com/kakopappa/sinric/issues/18
-// If you receive an error like multi_nav_wifi:51: error: 'class WiFiManager' has no member named 'addAP' use
-// https://github.com/the-real-orca/WiFiManager
+// Check this issue if you are having problems installing WiFiManager 
+// https://github.com/kakopappa/sinric/issues/18
+
 
 WebSocketsClient webSocket;
 WiFiClient client;
