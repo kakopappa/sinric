@@ -6,7 +6,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
 #include <WebSocketsClient.h> //  https://github.com/kakopappa/sinric/wiki/How-to-add-dependency-libraries
-#include <ArduinoJson.h> // https://github.com/kakopappa/sinric/wiki/How-to-add-dependency-libraries
+#include <ArduinoJson.h> // https://github.com/kakopappa/sinric/wiki/How-to-add-dependency-libraries (use the correct version)
 #include <StreamString.h>
 
 ESP8266WiFiMulti WiFiMulti;
@@ -22,8 +22,6 @@ WiFiClient client;
 uint64_t heartbeatTimestamp = 0;
 bool isConnected = false;
 
-void setPowerStateOnServer(String deviceId, String value);
-void setTargetTemperatureOnServer(String deviceId, String value, String scale);
 
 // deviceId is the ID assgined to your smart-home-device in sinric.com dashboard. Copy it from dashboard and paste it here
 
