@@ -1,5 +1,5 @@
 /*
- Version 0.3 - March 06 2018
+ Version 0.4 - April 26 2019
 */ 
 
 #include <Arduino.h>
@@ -157,41 +157,4 @@ void loop() {
   }   
 }
 
-// If you are going to use a push button to on/off the switch manually, use this function to update the status on the server
-// so it will reflect on Alexa app.
-// eg: setPowerStateOnServer("deviceid", "ON")
-
-// Call ONLY If status changed. DO NOT CALL THIS IN loop() and overload the server. 
-
-void setPowerStateOnServer(String deviceId, String value) {
-  DynamicJsonBuffer jsonBuffer;
-  JsonObject& root = jsonBuffer.createObject();
-  root["deviceId"] = deviceId;
-  root["action"] = "setPowerState";
-  root["value"] = value;
-  StreamString databuf;
-  root.printTo(databuf);
-  
-  webSocket.sendTXT(databuf);
-}
-
-//eg: setPowerStateOnServer("deviceid", "CELSIUS", "25.0")
-
-// Call ONLY If status changed. DO NOT CALL THIS IN loop() and overload the server. 
-
-void setTargetTemperatureOnServer(String deviceId, String value, String scale) {
-  DynamicJsonBuffer jsonBuffer;
-  JsonObject& root = jsonBuffer.createObject();
-  root["action"] = "SetTargetTemperature";
-  root["deviceId"] = deviceId;
-  
-  JsonObject& valueObj = root.createNestedObject("value");
-  JsonObject& targetSetpoint = valueObj.createNestedObject("targetSetpoint");
-  targetSetpoint["value"] = value;
-  targetSetpoint["scale"] = scale;
-   
-  StreamString databuf;
-  root.printTo(databuf);
-  
-  webSocket.sendTXT(databuf);
-}
+// If you want a push button: https://github.com/kakopappa/sinric/blob/master/arduino_examples/switch_with_push_button.ino  
