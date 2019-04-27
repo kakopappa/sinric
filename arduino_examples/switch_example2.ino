@@ -2,29 +2,28 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
 #include <WebSocketsClient.h> //  https://github.com/kakopappa/sinric/wiki/How-to-add-dependency-libraries
-#include <ArduinoJson.h> // https://github.com/kakopappa/sinric/wiki/How-to-add-dependency-libraries
+#include <ArduinoJson.h> // https://github.com/kakopappa/sinric/wiki/How-to-add-dependency-libraries (use the correct version)
 #include <StreamString.h>
 
 ESP8266WiFiMulti WiFiMulti;
 WebSocketsClient webSocket;
 WiFiClient client;
 
-#define MyApiKey "" // TODO: Change to your sinric API Key. Your API Key is displayed on sinric.com dashboard
-#define MySSID "" // TODO: Change to your Wifi network SSID
-#define MyWifiPassword "" // TODO: Change to your Wifi network password
-
 #define HEARTBEAT_INTERVAL 300000 // 5 Minutes 
-
-const int relayPin1 = 1; // TODO: Change according to your board
-const int relayPin2 = 2; // TODO: Change according to your board
 
 uint64_t heartbeatTimestamp = 0;
 bool isConnected = false;
  
+#define MyApiKey "" // TODO: Change to your sinric API Key. Your API Key is displayed on sinric.com dashboard
+#define MySSID "" // TODO: Change to your Wifi network SSID
+#define MyWifiPassword "" // TODO: Change to your Wifi network password
+
 #define DEVICE1 "xxxxx"  //TODO: Device ID of first device
 #define DEVICE2 "xxxxx"  //TODO: Device ID of second device
+ 
+const int relayPin1 = 1; // TODO: Change according to your board
+const int relayPin2 = 2; // TODO: Change according to your board
 
-void setPowerStateOnServer(String deviceId, String value);
 
 // deviceId is the ID assgined to your smart-home-device in sinric.com dashboard. Copy it from dashboard and paste it here
 
@@ -164,19 +163,4 @@ void loop() {
   }   
 }
 
-// If you are going to use a push button to on/off the switch manually, use this function to update the status on the server
-// so it will reflect on Alexa app.
-// eg: setPowerStateOnServer("deviceid", "ON")
-
-// Call ONLY If status changed. DO NOT CALL THIS IN loop() and overload the server. 
-void setPowerStateOnServer(String deviceId, String value) {
-  DynamicJsonBuffer jsonBuffer;
-  JsonObject& root = jsonBuffer.createObject();
-  root["deviceId"] = deviceId;
-  root["action"] = "setPowerState";
-  root["value"] = value;
-  StreamString databuf;
-  root.printTo(databuf);
-  
-  webSocket.sendTXT(databuf);
-}
+ 
