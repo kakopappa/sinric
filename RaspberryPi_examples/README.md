@@ -1,8 +1,7 @@
 # RaspberryPi Examples
 
 ### Install Required libraries
-    `pip install -r required.txt`
+   `pip install -r required.txt`
  
 ### Run 
-
-    `python app.py`
+  `python app.py`
