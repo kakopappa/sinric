@@ -29,7 +29,7 @@ def selectDevice(deviceId,action,value):
         deviceAction(BulbPin,value,'Bulb')
 
     elif deviceId == "5c12c********": #Replace with your deviceId
-        deviceAction(BulbPin,value,'Fan')
+        deviceAction(FanPin,value,'Fan')
 
 def on_message(ws, message):
     obj = ast.literal_eval(message)
