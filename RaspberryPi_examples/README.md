@@ -4,4 +4,4 @@
    `pip install -r required.txt --user`
  
 ### Run 
-  `python app.py`
+  `python bulb_example.py`
