@@ -17,7 +17,7 @@ https://github.com/kakopappa/sinric/blob/master/arduino_examples
 
 5. Change the Arduino Sketch. Replace the API Key, Wifi SSID and Password
 
-6. Install Amazon Alexa Smart Home Skill (Available in US, German, India, UK, Canada, Australia, New Zealand, Italy, Spanish (ES/MX) here and Link to your Sinric account.
+6. Install Amazon Alexa Smart Home Skill
 https://www.amazon.com/dp/B078RGYWQQ
 
 If you cannot link the Skill, check https://github.com/kakopappa/sinric/wiki/Cannot-link-skill%3F
@@ -45,6 +45,9 @@ Litecoin:
 LUCY9BBoX6uFXh8mHMmK3qdXQPwMVVVCfx
 
 **Supporting Libraries:**
+
+Python library by Dhanush Dazz 
+https://github.com/kakopappa/sinric/tree/master/python_examples
 
 Boris Jäger has created an "easy to use" library for connecting your devices to io.sinric.com
 https://github.com/sivar2311/SinricClass
