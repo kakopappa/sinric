@@ -30,7 +30,6 @@ or
 
 ::
 
-   `pip install -r required.txt --user`
     from sinric import Sinric
     from time import sleep
 

@@ -1,9 +1,7 @@
-import websocket
-import threading
-import time
-import base64
+from time import sleep
+from sinric import Sinric
 import ast
-import json
+apiKey = 'Replace with your api key'
 
 def onSetPowerState(deviceId,value): 
     # alexa, turn on tv ==> {"deviceId":"xx","action":"setPowerState","value":"ON"}
@@ -72,44 +70,14 @@ def selectionAction(deviceId,action,value):
         onPreviosPlay(deviceId,value)
     elif action == 'SelectInput':
         onSelectInput(deviceId,value)
-        
-
-def on_message(ws, message): #Callback function on successfull response from server
-    obj = ast.literal_eval(message)
-    deviceId = obj['deviceId']
-    action = obj['action']
-    value = obj['value']
-    selectionAction(deviceId, action, value)
-    # print(message)      #Prints the JSON response 
-
-
-def on_error(ws, error):
-    print(error)
-
-
-def on_close(ws):
-    print('### closed ###')
-    time.sleep(2)
-    initiate()
-
-
-def on_open(ws):
-    print('### Initiating new websocket connection ###')
-
-
-def initiate():
-    websocket.enableTrace(True)
-
-    ws = websocket.WebSocketApp('ws://iot.sinric.com',
-                                header={
-                                    'Authorization:' + base64.b64encode('apikey:[replace with your api key ]')},
-                                on_message=on_message,
-                                on_error=on_error,
-                                on_close=on_close)
-    ws.on_open = on_open
-
-    ws.run_forever()
-
 
 if __name__ == '__main__':
-    initiate()
+    obj = Sinric(apiKey)
+    while True:
+        response = obj.initialize()
+        data = ast.literal_eval(response)
+        deviceId = data['deviceId']
+        action = data['action']
+        value = data['value']
+        selectionAction(deviceId,action,value)
+        sleep(2)
