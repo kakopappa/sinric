@@ -1,5 +1,7 @@
 # Sinric
 
+[![](https://img.shields.io/github/repo-size/kakopappa/sinric.svg)]() [![](https://img.shields.io/github/last-commit/kakopappa/sinric.svg)]() [![](https://img.shields.io/github/forks/kakopappa/sinric.svg?style=social)]() [![](https://img.shields.io/github/stars/kakopappa/sinric.svg?style=social)]() [![](https://img.shields.io/badge/author-Aruna%20Tennakoon-brightgreen.svg)](https://github.com/kakopappa)
+
 Welcome to Sinric
 
 Sinric helps you to integrate your existing devices (such as RaspberryPi, ESP8226, ESP32 or Arduino) with Amazon Alexa or Google Home for FREE!
