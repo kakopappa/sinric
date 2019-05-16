@@ -16,13 +16,16 @@ Python3
 
 ::
 
-    pip3 install pysinric
+    pip3 install pysinric --user
 
 or
 
+Python
+------
+
 ::
 
-    pip install pysinric
+    pip install pysinric --user
 
 
 **Implementing :**

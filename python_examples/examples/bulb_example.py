@@ -1,6 +1,6 @@
 from sinric import Sinric
 from time import sleep
-import ast
+import json
 apiKey = 'Replace with your api key'  #https://sinric.com
 
 
@@ -22,7 +22,7 @@ if __name__ == '__main__':
     obj  = Sinric(apiKey)
     while True:
         response = obj.initialize()
-        data =  ast.literal_eval(response)
+        data =  json.loads(response)
         print(data)
         deviceId = data['deviceId']
         action = data['action']
