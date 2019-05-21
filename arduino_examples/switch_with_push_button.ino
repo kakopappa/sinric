@@ -166,7 +166,7 @@ void handleEvent(AceButton* /* button */, uint8_t eventType,
   switch (eventType) {
     case AceButton::kEventPressed:
       Serial.println("kEventPressed");
-      setPowerStateOnServer("5cb763551f672e5a5b506676", "ON");
+      setPowerStateOnServer("<device id>", "ON");
       break;
     case AceButton::kEventReleased:
       Serial.println("kEventReleased");
