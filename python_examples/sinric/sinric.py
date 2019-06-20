@@ -1,21 +1,15 @@
 import websocket
-import threading
-import time
-import base64
-import json
-from collections import OrderedDict
-
+from base64 import b64encode as enc
 
 
 class Sinric:
     def __init__(self, apikey):
-        self.apikey = apikey
+        self.apikey = apikey.encode('ascii')
 
     def initialize(self):
         websocket.enableTrace(True)
         ws = websocket.create_connection('ws://iot.sinric.com',
-                                         header={'Authorization:' + base64.b64encode('apikey:' + self.apikey)})
-        # print("Sent")
+                                         header={'Authorization:' + enc(b'apikey:'+self.apikey).decode('ascii')})
         response = ws.recv()
         ws.close()
         return response
