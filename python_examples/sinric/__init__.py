@@ -1,1 +1,1 @@
-from .sinric import Sinric
+from ._sinric import Sinric
