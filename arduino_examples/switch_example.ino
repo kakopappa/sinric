@@ -26,12 +26,12 @@ bool isConnected = false;
 // deviceId is the ID assgined to your smart-home-device in sinric.com dashboard. Copy it from dashboard and paste it here
 
 void turnOn(String deviceId) {
-  if (deviceId == "5axxxxxxxxxxxxxxxxxxx") // Device ID of first device
+  if (deviceId == "wemo.light.921") // Device ID of first device
   {  
     Serial.print("Turn on device id: ");
     Serial.println(deviceId);
   } 
-  else if (deviceId == "5axxxxxxxxxxxxxxxxxxx") // Device ID of second device
+  else if (deviceId == "wemo.light.921") // Device ID of second device
   { 
     Serial.print("Turn on device id: ");
     Serial.println(deviceId);
@@ -43,12 +43,63 @@ void turnOn(String deviceId) {
 }
 
 void turnOff(String deviceId) {
-   if (deviceId == "5axxxxxxxxxxxxxxxxxxx") // Device ID of first device
+   if (deviceId == "wemo.light.596") // Device ID of first device
    {  
      Serial.print("Turn off Device ID: ");
      Serial.println(deviceId);
    }
-   else if (deviceId == "5axxxxxxxxxxxxxxxxxxx") // Device ID of second device
+   else if (deviceId == "wemo.light.596") // Device ID of second device
+   { 
+     Serial.print("Turn off Device ID: ");
+     Serial.println(deviceId);
+  }
+  else {
+     Serial.print("Turn off for unknown device id: ");
+     Serial.println(deviceId);    
+  }
+}
+
+void turnOff(String deviceId) {
+   if (deviceId == "wemo.light.ECE") // Device ID of first device
+   {  
+     Serial.print("Turn off Device ID: ");
+     Serial.println(deviceId);
+   }
+   else if (deviceId == "wemo.light.ECE") // Device ID of second device
+   { 
+     Serial.print("Turn off Device ID: ");
+     Serial.println(deviceId);
+  }
+  else {
+     Serial.print("Turn off for unknown device id: ");
+     Serial.println(deviceId);    
+  }
+}
+
+void turnOff(String deviceId) {
+   if (deviceId == "wemo.switch.596") // Device ID of first device
+   {  
+     Serial.print("Turn off Device ID: ");
+     Serial.println(deviceId);
+   }
+   else if (deviceId == "wemo.switch.596") // Device ID of second device
+   { 
+     Serial.print("Turn off Device ID: ");
+     Serial.println(deviceId);
+  }
+  else {
+     Serial.print("Turn off for unknown device id: ");
+     Serial.println(deviceId);    
+  }
+}
+
+void turnOff(String deviceId) {
+   if (deviceId == "wemo.switch.C7B") // Device ID of first device
+   {  
+     Serial.print("Turn off Device ID: ");
+     Serial.println(deviceId);
+   }
+   else if (deviceId == "wemo.switch.C7B") // Device ID of second device
    { 
      Serial.print("Turn off Device ID: ");
      Serial.println(deviceId);
