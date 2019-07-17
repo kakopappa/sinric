@@ -1,5 +1,4 @@
 import websocket
-import threading
 import time
 import base64
 import json
