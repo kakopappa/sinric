@@ -1,18 +1,17 @@
-from sinric import Sinric
-import logging
+from loguru import logger
 
-apiKey = 'Api Key'
+from sinric import Sinric
+
+apiKey = "Api Key"
 
 
 def power_state(deviceId, state):
-    print(deviceId, state)
+    logger.info("{} {}".format(deviceId, state))
 
 
-callbacks = {
-    'setPowerState': power_state,
-}
+callbacks = {"setPowerState": power_state}
 
-if __name__ == '__main__':
-    logging.basicConfig(filename='myapp.log', level=logging.INFO)
+if __name__ == "__main__":
+    logging.basicConfig(filename="myapp.log", level=logging.INFO)
     ob = Sinric(apiKey, callbacks)
     ob.handle()

@@ -2,7 +2,7 @@ from setuptools import setup
 
 VERSION = "0.1.0"
 
-with open('README.rst', 'r') as f:
+with open("README.rst", "r") as f:
     long_description = f.read()
 setup(
     name="pysinric",
@@ -12,12 +12,18 @@ setup(
     description="A python package for your sinric alexa skill",
     long_description=long_description,
     url="https://github.com/kakopappa/sinric",
-    packages=['sinric'],
-    install_requires=['websocket_client'],
-    keywords=['alexa', 'alexa-skill', 'sinric', 'sinric-alexa-skill', 'alexa-home-automation'],
+    packages=["sinric"],
+    install_requires=["websocket_client", "loguru"],
+    keywords=[
+        "alexa",
+        "alexa-skill",
+        "sinric",
+        "sinric-alexa-skill",
+        "alexa-home-automation",
+    ],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 2",
         "Operating System :: OS Independent",
-    ]
+    ],
 )
