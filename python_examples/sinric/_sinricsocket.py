@@ -15,7 +15,7 @@ class SinricSocket:
         self.apikey = apikey.encode("ascii")
         self.callbacks = callbacks
         self.logger = logger
-        self.callback_handler = CallBackHandler(self.callbacks)
+        self.callback_handler = CallBackHandler(self.callbacks, self.logger)
 
     def on_message(self, response):
         self.logger.info(response)

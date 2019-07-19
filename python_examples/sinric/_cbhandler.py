@@ -1,6 +1,7 @@
 class CallBackHandler:
-    def __init__(self, callbacks):
+    def __init__(self, callbacks, logger):
         self.callbacks = callbacks
+        self.logger = logger
 
     def handle_callbacks(self, jsn):
         if jsn.get("action") == "setPowerState":
