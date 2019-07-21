@@ -7,8 +7,24 @@ const options = {
     }
 };
 
+ // Keep live and detect disconnection
+ function heartbeat() {
+    clearTimeout(this.pingTimeout);
+  
+    this.pingTimeout = setTimeout(() => {
+      console.log("No Connection. Killing node...")
+      this.terminate();
+    }, 30000 + 1000);
+  }
+
 const ws = new WebSocket('ws://iot.sinric.com', options);
- 
+
+ws.on('open', heartbeat);
+ws.on('ping', heartbeat);
+ws.on('close', function clear() {
+  clearTimeout(this.pingTimeout);
+});
+
 ws.on('open', function open() {
    console.log("Connected. waiting for commands..");
 });
