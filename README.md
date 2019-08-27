@@ -60,3 +60,6 @@ https://github.com/mayankraichura/node-red-contrib-sinric-ws
 Domoticz support by gizmocuz
 https://github.com/kakopappa/sinric/blob/master/arduino_examples/domoticz_example.ino
 
+**Supporting Hardware:**
+AC Controller by dimityrivanov
+https://github.com/dimityrivanov/ESP-ACController
