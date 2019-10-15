@@ -30,21 +30,6 @@ If you cannot link the Skill, check https://github.com/kakopappa/sinric/wiki/Can
 
 https://github.com/kakopappa/sinric/wiki/How-to-use-Google-Home
 
-8. Buy Me a Beer!
-
-Paypal: https://paypal.me/arunat
-
-Or support me by buying a IRDevKit to turn on or off your TV or air conditioner via Amazon Alexa
-https://irdevkit.com
-
-Ethereum: 
-0x025463f64589ee6ff2d1584ea2ee8133b3af49fe
-
-Bitcoin: 
-134635A8kWvNCZH6fBwLKEJmevfihoUEs8
-
-Litecoin: 
-LUCY9BBoX6uFXh8mHMmK3qdXQPwMVVVCfx
 
 **Supporting Libraries:**
 
