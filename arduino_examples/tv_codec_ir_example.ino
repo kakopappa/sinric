@@ -10,35 +10,36 @@
 #include <IRremoteESP8266.h>
 #include <IRsend.h>
 #include <IRutils.h>
-#define IR_LED 4 //D2
+#define IR_LED 4 //TODO: Change to your digital pin for IR. default D2
 
 IRsend irsend(IR_LED);
 
-bool blink_when_IR = true;
-bool print_for_debug = true;
+//Start of including vars
+//Variables starting with 'TV' are ir commands for the TV
+//Variables starting with 'TELE' are ir commands for DECODER
 
-const unsigned long LG_POWER_H = 0x20DF10EF;
-const unsigned long LG_VOLUP_H = 0x20DF40BF;
-const unsigned long LG_VOLDOWN_H = 0x20DFC03F;
-const unsigned long LG_OK_H = 0x20DF22DD;
-const unsigned long LG_INPUT_H = 0x20DFD02F;
-const unsigned long LG_UP_H = 0x20DF02FD;
-const unsigned long LG_DOWN_H = 0x20DF827D;
-const unsigned long LG_MUTE_H = 0x20DF906F;
+const unsigned long TV_POWER_H = 0x20DF10EF;
+const unsigned long TV_VOLUP_H = 0x20DF40BF;
+const unsigned long TV_VOLDOWN_H = 0x20DFC03F;
+const unsigned long TV_OK_H = 0x20DF22DD;
+const unsigned long TV_INPUT_H = 0x20DFD02F;
+const unsigned long TV_UP_H = 0x20DF02FD;
+const unsigned long TV_DOWN_H = 0x20DF827D;
+const unsigned long TV_MUTE_H = 0x20DF906F;
 
-const unsigned long LG_P_UP_H = 0x20DF00FF;
-const unsigned long LG_P_DOWN_H = 0x20DF807F;
+const unsigned long TV_P_UP_H = 0x20DF00FF;
+const unsigned long TV_P_DOWN_H = 0x20DF807F;
 
-const unsigned long LG_1 = 0x20DF8877;
-const unsigned long LG_2 = 0x220DF48B7;
-const unsigned long LG_3 = 0x20DFC837;
-const unsigned long LG_4 = 0x20DF28D7;
-const unsigned long LG_5 = 0x20DFA857;
-const unsigned long LG_6 = 0x20DF6897;
-const unsigned long LG_7 = 0x20DFE817;
-const unsigned long LG_8 = 0x20DF18E7;
-const unsigned long LG_9 = 0x20DF9867;
-const unsigned long LG_0 = 0x20DF08F7;
+const unsigned long TV_1 = 0x20DF8877;
+const unsigned long TV_2 = 0x220DF48B7;
+const unsigned long TV_3 = 0x20DFC837;
+const unsigned long TV_4 = 0x20DF28D7;
+const unsigned long TV_5 = 0x20DFA857;
+const unsigned long TV_6 = 0x20DF6897;
+const unsigned long TV_7 = 0x20DFE817;
+const unsigned long TV_8 = 0x20DF18E7;
+const unsigned long TV_9 = 0x20DF9867;
+const unsigned long TV_0 = 0x20DF08F7;
 
 const unsigned long TELE_1 = 0x977B4DB2;
 const unsigned long TELE_2 = 0x977B659A;
@@ -62,6 +63,7 @@ const unsigned long DELAY_BETWEEN_COMMANDS = 100;
 #define API_KEY "" // TODO: Change to your sinric API Key. Your API Key is displayed on sinric.com dashboard
 #define SSID_NAME "" // TODO: Change to your Wifi network SSID
 #define WIFI_PASSWORD "" // TODO: Change to your Wifi network password
+#define DEVICE_ID "5*****************"
 #define SERVER_URL "iot.sinric.com"
 #define SERVER_PORT 80
 #define HEARTBEAT_INTERVAL 300000 // 5 Minutes 
@@ -141,10 +143,10 @@ void adjustVolume(int adjustVolume, bool kvdefault) {
     Serial.print("Volume down: ");
     Serial.println(adjustVolume);
     if (kvdefault) {
-      irsend.sendNEC(LG_VOLDOWN_H, 32);
+      irsend.sendNEC(TV_VOLDOWN_H, 32);
     } else {
       for (int i = 0; i < -adjustVolume; i++ ) {
-        irsend.sendNEC(LG_VOLDOWN_H, 32);
+        irsend.sendNEC(TV_VOLDOWN_H, 32);
         delay(DELAY_BETWEEN_COMMANDS);
       }
     }
@@ -152,10 +154,10 @@ void adjustVolume(int adjustVolume, bool kvdefault) {
     Serial.print("Volume up: ");
     Serial.println(adjustVolume);
     if (kvdefault) {
-      irsend.sendNEC(LG_VOLUP_H, 32);
+      irsend.sendNEC(TV_VOLUP_H, 32);
     } else {
       for (int i = 0; i < adjustVolume; i++ ) {
-        irsend.sendNEC(LG_VOLUP_H, 32);
+        irsend.sendNEC(TV_VOLUP_H, 32);
         delay(DELAY_BETWEEN_COMMANDS);
       }
     }
@@ -166,7 +168,7 @@ void adjustVolume(int adjustVolume, bool kvdefault) {
 void setMute(bool mute) {
   Serial.print("mute: ");
   Serial.println(mute);
-  irsend.sendNEC(LG_MUTE_H, 32);
+  irsend.sendNEC(TV_MUTE_H, 32);
 }
 
 void setChannel(String ch) {
@@ -175,34 +177,34 @@ void setChannel(String ch) {
   for (int i = 0; i < ch.length(); i++) {
     switch (ch[i]) {
       case '1':
-        irsend.sendNEC(TELE_1, 32);
+        send_ir(TELE_1, 32);
         break;
       case '2':
-        irsend.sendNEC(TELE_2, 32);
+        send_ir(TELE_2, 32);
         break;
       case '3':
-        irsend.sendNEC(TELE_3, 32);
+        send_ir(TELE_3, 32);
         break;
       case '4':
-        irsend.sendNEC(TELE_4, 32);
+        send_ir(TELE_4, 32);
         break;
       case '5':
-        irsend.sendNEC(TELE_5, 32);
+        send_ir(TELE_5, 32);
         break;
       case '6':
-        irsend.sendNEC(TELE_6, 32);
+        send_ir(TELE_6, 32);
         break;
       case '7':
-        irsend.sendNEC(TELE_7, 32);
+        send_ir(TELE_7, 32);
         break;
       case '8':
-        irsend.sendNEC(TELE_8, 32);
+        send_ir(TELE_8, 32);
         break;
       case '9':
-        irsend.sendNEC(TELE_9, 32);
+        send_ir(TELE_9, 32);
         break;
       case '0':
-        irsend.sendNEC(TELE_0, 32);
+        send_ir(TELE_0, 32);
         break;
     }
     delay(DELAY_BETWEEN_COMMANDS);
@@ -211,11 +213,15 @@ void setChannel(String ch) {
   irsend.sendNEC(TELE_OK, 32);
 }
 
+void send_ir(unsigned long type, int len) {
+  irsend.sendNEC(type, len);
+}
+
 void setInput(String value) {
   Serial.print("Next input selected: ");
-  irsend.sendNEC(LG_INPUT_H, 32);
+  irsend.sendNEC(TV_INPUT_H, 32);
   delay(DELAY_BETWEEN_COMMANDS);
-  irsend.sendNEC(LG_DOWN_H, 32);
+  irsend.sendNEC(TV_DOWN_H, 32);
 }
 
 void turnOn(String deviceId) {
@@ -223,7 +229,7 @@ void turnOn(String deviceId) {
   {
     Serial.print("Turn on device id: ");
     Serial.println(deviceId);
-    irsend.sendNEC(LG_POWER_H, 32);
+    irsend.sendNEC(TV_POWER_H, 32);
   }
 }
 
@@ -232,7 +238,7 @@ void turnOff(String deviceId) {
   {
     Serial.print("Turn off Device ID: ");
     Serial.println(deviceId);
-    irsend.sendNEC(LG_POWER_H, 32);
+    irsend.sendNEC(TV_POWER_H, 32);
   }
 }
 
