@@ -130,11 +130,11 @@ void skipChannel(int channels) {
   if (channels < 0) {
     Serial.print("Channel skip down: ");
     Serial.println(channels);
-    irsend.sendNEC(TELE_P_DOWN_H, 32);
+    send_ir_TELETELE_P_DOWN_H, 32);
   } else if (channels > 0) {
     Serial.print("Channel skip up: ");
     Serial.println(channels);
-    irsend.sendNEC(TELE_P_UP_H, 32);
+    send_ir_TELE(TELE_P_UP_H, 32);
   }
 }
 
@@ -143,10 +143,10 @@ void adjustVolume(int adjustVolume, bool kvdefault) {
     Serial.print("Volume down: ");
     Serial.println(adjustVolume);
     if (kvdefault) {
-      irsend.sendNEC(TV_VOLDOWN_H, 32);
+      send_ir_TV(TV_VOLDOWN_H, 32);
     } else {
       for (int i = 0; i < -adjustVolume; i++ ) {
-        irsend.sendNEC(TV_VOLDOWN_H, 32);
+        send_ir_TV(TV_VOLDOWN_H, 32);
         delay(DELAY_BETWEEN_COMMANDS);
       }
     }
@@ -154,10 +154,10 @@ void adjustVolume(int adjustVolume, bool kvdefault) {
     Serial.print("Volume up: ");
     Serial.println(adjustVolume);
     if (kvdefault) {
-      irsend.sendNEC(TV_VOLUP_H, 32);
+      send_ir_TV(TV_VOLUP_H, 32);
     } else {
       for (int i = 0; i < adjustVolume; i++ ) {
-        irsend.sendNEC(TV_VOLUP_H, 32);
+        send_ir_TV(TV_VOLUP_H, 32);
         delay(DELAY_BETWEEN_COMMANDS);
       }
     }
@@ -168,7 +168,7 @@ void adjustVolume(int adjustVolume, bool kvdefault) {
 void setMute(bool mute) {
   Serial.print("mute: ");
   Serial.println(mute);
-  irsend.sendNEC(TV_MUTE_H, 32);
+  send_ir_TV(TV_MUTE_H, 32);
 }
 
 void setChannel(String ch) {
@@ -177,51 +177,57 @@ void setChannel(String ch) {
   for (int i = 0; i < ch.length(); i++) {
     switch (ch[i]) {
       case '1':
-        send_ir(TELE_1, 32);
+        send_ir_TELE(TELE_1, 32);
         break;
       case '2':
-        send_ir(TELE_2, 32);
+        send_ir_TELE(TELE_2, 32);
         break;
       case '3':
-        send_ir(TELE_3, 32);
+        send_ir_TELE(TELE_3, 32);
         break;
       case '4':
-        send_ir(TELE_4, 32);
+        send_ir_TELE(TELE_4, 32);
         break;
       case '5':
-        send_ir(TELE_5, 32);
+        send_ir_TELE(TELE_5, 32);
         break;
       case '6':
-        send_ir(TELE_6, 32);
+        send_ir_TELE(TELE_6, 32);
         break;
       case '7':
-        send_ir(TELE_7, 32);
+        send_ir_TELE(TELE_7, 32);
         break;
       case '8':
-        send_ir(TELE_8, 32);
+        send_ir_TELE(TELE_8, 32);
         break;
       case '9':
-        send_ir(TELE_9, 32);
+        send_ir_TELE(TELE_9, 32);
         break;
       case '0':
-        send_ir(TELE_0, 32);
+        send_ir_TELE(TELE_0, 32);
         break;
     }
     delay(DELAY_BETWEEN_COMMANDS);
   }
   delay(DELAY_BETWEEN_COMMANDS);
-  irsend.sendNEC(TELE_OK, 32);
+  send_ir_TELE(TELE_OK, 32);
 }
 
-void send_ir(unsigned long type, int len) {
+// use this to send an ir message to the decoder
+void send_ir_TELE(unsigned long type, int len) {
+  irsend.sendNEC(type, len);
+}
+
+// use this to send an ir message to the TV
+void send_ir_TV(unsigned long type, int len) {
   irsend.sendNEC(type, len);
 }
 
 void setInput(String value) {
   Serial.print("Next input selected: ");
-  irsend.sendNEC(TV_INPUT_H, 32);
+  send_ir_TV(TV_INPUT_H, 32);
   delay(DELAY_BETWEEN_COMMANDS);
-  irsend.sendNEC(TV_DOWN_H, 32);
+  send_ir_TV(TV_DOWN_H, 32);
 }
 
 void turnOn(String deviceId) {
@@ -229,7 +235,7 @@ void turnOn(String deviceId) {
   {
     Serial.print("Turn on device id: ");
     Serial.println(deviceId);
-    irsend.sendNEC(TV_POWER_H, 32);
+    send_ir_TV(TV_POWER_H, 32);
   }
 }
 
@@ -238,7 +244,7 @@ void turnOff(String deviceId) {
   {
     Serial.print("Turn off Device ID: ");
     Serial.println(deviceId);
-    irsend.sendNEC(TV_POWER_H, 32);
+    send_ir_TV(TV_POWER_H, 32);
   }
 }
 
