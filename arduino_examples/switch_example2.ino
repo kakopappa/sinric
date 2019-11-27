@@ -91,8 +91,14 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
         // For Light device type
         // Look at the light example in github
           
+#if ARDUINOJSON_VERSION_MAJOR == 5
         DynamicJsonBuffer jsonBuffer;
-        JsonObject& json = jsonBuffer.parseObject((char*)payload); 
+        JsonObject& json = jsonBuffer.parseObject((char*)payload);
+#endif
+#if ARDUINOJSON_VERSION_MAJOR == 6        
+        DynamicJsonDocument json(1024);
+        deserializeJson(json, (char*) payload);      
+#endif        
         String deviceId = json ["deviceId"];     
         String action = json ["action"];
         
