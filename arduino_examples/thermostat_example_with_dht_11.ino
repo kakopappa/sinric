@@ -33,7 +33,7 @@ uint64_t tempratureUpdateTimestamp = 0;
 bool isConnected = false;
 
 void setPowerStateOnServer(String deviceId, String value);
-void setSetTemperatureSettingOnServer(String deviceId, String value, String scale);
+void setSetTemperatureSettingOnServer(String deviceId, float setPoint, String scale, float ambientTemperature, float ambientHumidity);
 void readTempature();
 
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
@@ -58,8 +58,14 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
         // {"deviceId": xxxx, "action": "AdjustTargetTemperature", value: "targetSetpointDelta": { "value": 2.0, "scale": "FAHRENHEIT" }} // https://developer.amazon.com/docs/device-apis/alexa-thermostatcontroller.html#adjusttargettemperature
         // {"deviceId": xxxx, "action": "SetThermostatMode", value: "thermostatMode" : { "value": "COOL" }} // https://developer.amazon.com/docs/device-apis/alexa-thermostatcontroller.html#setthermostatmode
             
+#if ARDUINOJSON_VERSION_MAJOR == 5
         DynamicJsonBuffer jsonBuffer;
-        JsonObject& json = jsonBuffer.parseObject((char*)payload); 
+        JsonObject& json = jsonBuffer.parseObject((char*)payload);
+#endif
+#if ARDUINOJSON_VERSION_MAJOR == 6        
+        DynamicJsonDocument json(1024);
+        deserializeJson(json, (char*) payload);      
+#endif        
         String deviceId = json ["deviceId"];     
         String action = json ["action"];
 
@@ -107,6 +113,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
     case WStype_BIN:
       Serial.printf("[WSc] get binary length: %u\n", length);
       break;
+    default: break;  
   }
 }
 
@@ -194,13 +201,23 @@ void readTempature() {
 // Call ONLY If status changed. DO NOT CALL THIS IN loop() and overload the server. 
 
 void setPowerStateOnServer(String deviceId, String value) {
+#if ARDUINOJSON_VERSION_MAJOR == 5
   DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
+#endif
+#if ARDUINOJSON_VERSION_MAJOR == 6        
+  DynamicJsonDocument root(1024);
+#endif        
   root["deviceId"] = deviceId;
   root["action"] = "setPowerState";
   root["value"] = value;
   StreamString databuf;
+#if ARDUINOJSON_VERSION_MAJOR == 5
   root.printTo(databuf);
+#endif
+#if ARDUINOJSON_VERSION_MAJOR == 6        
+  serializeJson(root, databuf);
+#endif  
   
   webSocket.sendTXT(databuf);
 }
@@ -210,33 +227,59 @@ void setPowerStateOnServer(String deviceId, String value) {
 //eg: setSetTemperatureSettingOnServer("deviceid", 25.0, "CELSIUS" or "FAHRENHEIT", 23.0, 45.3)
 // setPoint: Indicates the target temperature to set on the termostat.
 void setSetTemperatureSettingOnServer(String deviceId, float setPoint, String scale, float ambientTemperature, float ambientHumidity) {
+#if ARDUINOJSON_VERSION_MAJOR == 5
   DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
+#endif
+#if ARDUINOJSON_VERSION_MAJOR == 6        
+  DynamicJsonDocument root(1024);
+#endif        
   root["action"] = "SetTemperatureSetting";
   root["deviceId"] = deviceId;
   
+#if ARDUINOJSON_VERSION_MAJOR == 5
   JsonObject& valueObj = root.createNestedObject("value");
   JsonObject& temperatureSetting = valueObj.createNestedObject("temperatureSetting");
+#endif
+#if ARDUINOJSON_VERSION_MAJOR == 6        
+  JsonObject valueObj = root.createNestedObject("value");
+  JsonObject temperatureSetting = valueObj.createNestedObject("temperatureSetting");
+#endif
   temperatureSetting["setPoint"] = setPoint;
   temperatureSetting["scale"] = scale;
   temperatureSetting["ambientTemperature"] = ambientTemperature;
   temperatureSetting["ambientHumidity"] = ambientHumidity;
    
   StreamString databuf;
+#if ARDUINOJSON_VERSION_MAJOR == 5
   root.printTo(databuf);
+#endif
+#if ARDUINOJSON_VERSION_MAJOR == 6        
+  serializeJson(root, databuf);
+#endif  
   
   webSocket.sendTXT(databuf);
 }
 // Call ONLY If status changed. DO NOT CALL THIS IN loop() and overload the server. 
 
 void setThermostatModeOnServer(String deviceId, String thermostatMode) {
+#if ARDUINOJSON_VERSION_MAJOR == 5
   DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
+#endif
+#if ARDUINOJSON_VERSION_MAJOR == 6        
+  DynamicJsonDocument root(1024);
+#endif        
   root["deviceId"] = deviceId;
   root["action"] = "SetThermostatMode";
   root["value"] = thermostatMode;
   StreamString databuf;
+#if ARDUINOJSON_VERSION_MAJOR == 5
   root.printTo(databuf);
+#endif
+#if ARDUINOJSON_VERSION_MAJOR == 6        
+  serializeJson(root, databuf);
+#endif  
   
   webSocket.sendTXT(databuf);
 }

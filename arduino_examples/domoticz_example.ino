@@ -206,8 +206,14 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
         // For Thermostat device type
         // {"deviceId":"5bfe4f7c85f6225c9115d000","action":"SetTargetTemperature","value":{"targetSetpoint":{"value":21,"scale":"CELSIUS"}}} //https://developer.amazon.com/docs/device-apis/alexa-thermostatcontroller.html
 
+#if ARDUINOJSON_VERSION_MAJOR == 5
         DynamicJsonBuffer jsonBuffer;
-        JsonObject& json = jsonBuffer.parseObject((char*)payload); 
+        JsonObject& json = jsonBuffer.parseObject((char*)payload);
+#endif
+#if ARDUINOJSON_VERSION_MAJOR == 6        
+        DynamicJsonDocument json(1024);
+        deserializeJson(json, (char*) payload);      
+#endif        
         String deviceId = json ["deviceId"];     
         String action = json ["action"];
 

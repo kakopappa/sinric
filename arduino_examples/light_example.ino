@@ -81,8 +81,14 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
         // {"deviceId": xxxx, "action": "IncreaseColorTemperature"} // https://developer.amazon.com/docs/device-apis/alexa-colortemperaturecontroller.html
         // {"deviceId": xxxx, "action": "SetColorTemperature", value: 2200} // https://developer.amazon.com/docs/device-apis/alexa-colortemperaturecontroller.html
         
+#if ARDUINOJSON_VERSION_MAJOR == 5
         DynamicJsonBuffer jsonBuffer;
-        JsonObject& json = jsonBuffer.parseObject((char*)payload); 
+        JsonObject& json = jsonBuffer.parseObject((char*)payload);
+#endif
+#if ARDUINOJSON_VERSION_MAJOR == 6        
+        DynamicJsonDocument json(1024);
+        deserializeJson(json, (char*) payload);      
+#endif        
         String deviceId = json ["deviceId"];     
         String action = json ["action"];
         
@@ -119,6 +125,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
     case WStype_BIN:
       Serial.printf("[WSc] get binary length: %u\n", length);
       break;
+    default: break;
   }
 }
 

@@ -31,7 +31,7 @@ const unsigned long TV_P_UP_H = 0x20DF00FF;
 const unsigned long TV_P_DOWN_H = 0x20DF807F;
 
 const unsigned long TV_1 = 0x20DF8877;
-const unsigned long TV_2 = 0x220DF48B7;
+const unsigned long TV_2 = 0x20DF48B7;
 const unsigned long TV_3 = 0x20DFC837;
 const unsigned long TV_4 = 0x20DF28D7;
 const unsigned long TV_5 = 0x20DFA857;
@@ -76,8 +76,9 @@ uint64_t heartbeatTimestamp = 0;
 bool isConnected = false;
 
 void setPowerStateOnServer(String deviceId, String value);
-void setTargetTemperatureOnServer(String deviceId, String value, String scale);
-
+void webSocketEvent(WStype_t type, uint8_t * payload, size_t length);
+void send_ir_TV(unsigned long type, int len);
+void send_ir_TELE(unsigned long type, int len);
 
 void setup() {
   Serial.begin(115200);
@@ -130,7 +131,7 @@ void skipChannel(int channels) {
   if (channels < 0) {
     Serial.print("Channel skip down: ");
     Serial.println(channels);
-    send_ir_TELETELE_P_DOWN_H, 32);
+    send_ir_TELE(TELE_P_DOWN_H, 32);
   } else if (channels > 0) {
     Serial.print("Channel skip up: ");
     Serial.println(channels);
@@ -174,7 +175,7 @@ void setMute(bool mute) {
 void setChannel(String ch) {
   Serial.print("Changing channel: ");
   Serial.println(ch);
-  for (int i = 0; i < ch.length(); i++) {
+  for (unsigned int i = 0; i < ch.length(); i++) {
     switch (ch[i]) {
       case '1':
         send_ir_TELE(TELE_1, 32);
@@ -262,8 +263,14 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
       break;
     case WStype_TEXT: {
         Serial.printf("[webSocketEvent] get text: %s\n", payload);
+#if ARDUINOJSON_VERSION_MAJOR == 5
         DynamicJsonBuffer jsonBuffer;
         JsonObject& json = jsonBuffer.parseObject((char*)payload);
+#endif
+#if ARDUINOJSON_VERSION_MAJOR == 6        
+        DynamicJsonDocument json(1024);
+        deserializeJson(json, (char*) payload);      
+#endif        
         String deviceId = json ["deviceId"];
         String action = json ["action"];
 
@@ -318,6 +325,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
     case WStype_BIN:
       Serial.printf("[webSocketEvent] get binary length: %u\n", length);
       break;
+    default: break;
   }
 }
 
@@ -329,13 +337,23 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 // Call ONLY If status changed. DO NOT CALL THIS IN loop() and overload the server.
 
 void setPowerStateOnServer(String deviceId, String value) {
+#if ARDUINOJSON_VERSION_MAJOR == 5
   DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
+#endif
+#if ARDUINOJSON_VERSION_MAJOR == 6        
+  DynamicJsonDocument root(1024);
+#endif        
+
   root["deviceId"] = deviceId;
   root["action"] = "setPowerState";
   root["value"] = value;
   StreamString databuf;
+#if ARDUINOJSON_VERSION_MAJOR == 5
   root.printTo(databuf);
-
+#endif
+#if ARDUINOJSON_VERSION_MAJOR == 6        
+  serializeJson(root, databuf);
+#endif  
   webSocket.sendTXT(databuf);
 }
