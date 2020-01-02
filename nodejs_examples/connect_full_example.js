@@ -43,7 +43,7 @@ ws.on('message', function incoming (data) {
       // command: "Alexa turn ON thermostat"
       // {"deviceId":"5xxxxxxxxxxxxxxxxxxxxxx","action":"setPowerState","value":"ON"}
       // command: "Alexa turn OFF thermostat"
-      // {"deviceId":"5xxxxxxxxxxxxxxxxxxxxxx","action":"setPowerState","value":"ON"}
+      // {"deviceId":"5xxxxxxxxxxxxxxxxxxxxxx","action":"setPowerState","value":"OFF"}
       if (jsonData.value === 'ON') {
         console.log('Turning ON thermostat...')
       } else {
