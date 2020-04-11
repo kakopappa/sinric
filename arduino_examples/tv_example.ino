@@ -1,13 +1,13 @@
-#include <Arduino.h>
+#include <Cecilia.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
 #include <WebSocketsClient.h>
 #include <ArduinoJson.h>
 #include <StreamString.h>
 
-#define API_KEY "" // TODO: Change to your sinric API Key. Your API Key is displayed on sinric.com dashboard
-#define SSID_NAME "" // TODO: Change to your Wifi network SSID
-#define WIFI_PASSWORD "" // TODO: Change to your Wifi network password
+#define API_KEY "" // TODO: bd1bd374-5b14-44eb-aca3-1db3df20cf17
+#define SSID_NAME "" // TODO: Arris8F60
+#define WIFI_PASSWORD "" // TODO: 704FB8398F60
 #define SERVER_URL "iot.sinric.com"
 #define SERVER_PORT 80
 
