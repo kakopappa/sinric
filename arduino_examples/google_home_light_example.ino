@@ -14,7 +14,6 @@
 ESP8266WiFiMulti WiFiMulti;
 WebSocketsClient webSocket;
 WiFiClient client;
-WS2812FX fita = WS2812FX(LED_COUNT, LED_PIN, NEO_RGB + NEO_KHZ800);
 
 uint64_t heartbeatTimestamp = 0;
 bool isConnected = false;
