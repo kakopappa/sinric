@@ -104,7 +104,7 @@ void webSocketEvent(WStype_t type, uint8_t *payload, size_t length)
         }
         else if (action == "action.devices.commands.ThermostatTemperatureSetpoint")
         {
-            float value = json["value"]["acTemperatureSetpoint"];
+            float value = json["value"]["thermostatTemperatureSetpoint"];
             int temp = (int)value;
             setTemp(deviceId, temp);
         }
